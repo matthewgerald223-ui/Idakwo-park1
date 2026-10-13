@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Idakwo Park</title>
+    <style>
+        body { font-family: sans-serif; background: #f0fdf4; padding: 15px; margin: 0; }
+        .box { background: white; padding: 15px; border-radius: 8px; border: 2px solid #15803d; }
+        h1 { font-size: 18px; color: #15803d; text-align: center; margin-bottom: 5px; }
+        p { font-size: 12px; text-align: center; color: #475569; margin-bottom: 15px; }
+        label { font-size: 12px; font-weight: bold; display: block; margin-top: 10px; color: #334155; }
+        input, select { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-size: 14px; outline: none; }
+        .account-card { background: #1e293b; color: white; padding: 12px; border-radius: 6px; margin-top: 15px; font-size: 13px; border-left: 4px solid #15803d; }
+        .account-card span { color: #facc15; font-weight: bold; font-size: 15px; }
+        button { width: 100%; background: #15803d; color: white; border: none; padding: 12px; font-weight: bold; font-size: 14px; margin-top: 15px; border-radius: 5px; cursor: pointer; }
+        button:active { background: #14532d; }
+        
+        .ticket-box { background: #f8fafc; border: 2px dashed #15803d; padding: 15px; margin-top: 15px; border-radius: 8px; display: none; }
+        .success-badge { background: #dcfce7; color: #166534; padding: 10px; border-radius: 5px; text-align: center; font-weight: bold; font-size: 13px; margin-bottom: 10px; border: 1px solid #bbf7d0; }
+        .ticket-info { font-size: 13px; margin-bottom: 6px; color: #334155; }
+        .ticket-info span { font-weight: bold; color: #1e293b; }
+    </style>
+</head>
+<body>
+
+    <div class="box">
+        <h1>IDAKWO MOTOR PARK</h1>
+        <p>Idah, Kogi State — Online Booking System</p>
+
+        <label>Passenger Full Name</label>
+        <input type="text" id="pName" placeholder="e.g. Ekpah Matthew">
+
+        <label>Phone Number</label>
+        <input type="text" id="pPhone" placeholder="08012345678">
+
+        <label>Destination Route</label>
+        <select id="pRoute">
+            <option>Idah to Lokoja (₦5,000)</option>
+            <option>Idah to Abuja (₦8,500)</option>
+            <option>Idah to Ankpa (₦4,000)</option>
+        </select>
+
+        <label>Travel Date</label>
+        <input type="date" id="pDate">
+
+        <label>Departure Time Slot</label>
+        <select id="pTime">
+            <option>Morning (7:00 AM)</option>
+            <option>Afternoon (12:30 PM)</option>
+            <option>Evening (4:00 PM)</option>
+        </select>
+
+        <div class="account-card">
+            <div style="font-size: 11px; color: #cbd5e1; text-transform: uppercase; margin-bottom: 4px;">Transfer Payment To:</div>
+            <div>Bank: <strong>OPay</strong></div>
+            <div>Account Number: <span>7072521896</span></div>
+            <div>Account Name: Idakwo Motors Park</div>
+        </div>
+
+        <label>Payment Transfer Ref / Teller No</label>
+        <input type="text" id="pRef" placeholder="e.g. OPAY/TRF/982341">
+
+        <button onclick="makeTicket()">Verify Payment & Generate E-Ticket</button>
+
+        <div class="ticket-box" id="myTicket">
+            <div class="success-badge">✅ PAYMENT SUCCESSFUL & TICKET GENERATED!</div>
+            <div class="ticket-info"><strong>Ticket ID:</strong> <span id="tId">IDK-9823</span></div>
+            <div class="ticket-info"><strong>Passenger:</strong> <span id="tName"></span></div>
+            <div class="ticket-info"><strong>Phone:</strong> <span id="tPhone"></span></div>
+            <div class="ticket-info"><strong>Route:</strong> <span id="tRoute"></span></div>
+            <div class="ticket-info"><strong>Travel Date:</strong> <span id="tDate" style="color: #15803d;"></span></div>
+            <div class="ticket-info"><strong>Time Slot:</strong> <span id="tTime" style="color: #15803d;"></span></div>
+            <div class="ticket-info"><strong>Transfer Ref:</strong> <span id="tRef"></span></div>
+            
+            <p style="font-size: 11px; color: #64748b; text-align: center; margin-top: 10px;">Show this verified receipt at Idah loading bay. Have a safe journey!</p>
+            
+            <button onclick="window.print()" style="background: #475569; margin-top: 10px;">Print / Save Receipt</button>
+        </div>
+    </div>
+
+    <script>
+        function makeTicket() {
+            var n = document.getElementById('pName').value.trim();
+            var p = document.getElementById('pPhone').value.trim();
+            var r = document.getElementById('pRoute').value;
+            var d = document.getElementById('pDate').value;
+            var t = document.getElementById('pTime').value;
+            var ref = document.getElementById('pRef').value.trim();
+
+            if(!n || !p || !d || !ref) {
+                alert('Please fill out all fields and provide your payment reference!');
+                return;
+            }
+
+            var randomId = "IDK-" + Math.floor(1000 + Math.random() * 9000);
+
+            document.getElementById('tId').innerText = randomId;
+            document.getElementById('tName').innerText = n;
+            document.getElementById('tPhone').innerText = p;
+            document.getElementById('tRoute').innerText = r;
+            document.getElementById('tDate').innerText = d;
+            document.getElementById('tTime').innerText = t;
+            document.getElementById('tRef').innerText = ref;
+
+            document.getElementById('myTicket').style.display = 'block';
+            document.getElementById('myTicket').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+
+</body>
+</html>
